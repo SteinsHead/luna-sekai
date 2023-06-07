@@ -9,8 +9,8 @@ function App(): JSX.Element {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
 
   return (
-    <div className="container w-screen h-screen flex flex-col bg-cyan-700/70">
-      <div className="m-6 flex flex-row-reverse">
+    <div className="w-screen h-screen flex flex-col bg-cyan-700/50">
+      <div className="m-6 flex flex-row-reverse justify-between items-center pr-6 pl-6">
         <DropdownMenu.Root open={isDropDownOpen} onOpenChange={setIsDropDownOpen}>
           <DropdownMenu.Trigger>
             <img
@@ -47,8 +47,19 @@ function App(): JSX.Element {
             )}
           </AnimatePresence>
         </DropdownMenu.Root>
+        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
+          关于
+        </div>
+        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
+          同步
+        </div>
+        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
+          添加
+        </div>
+        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
+          设定
+        </div>
       </div>
-      <div></div>
     </div>
   )
 }
