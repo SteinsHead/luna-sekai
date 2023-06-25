@@ -2,11 +2,30 @@
 // import icons from './assets/icons.svg'
 import wifu from '../../../resources/avatar.jpg'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import ePub from 'epubjs'
 
 function App(): JSX.Element {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
+  const [isBookOpen, setIsBookOpen] = useState(false)
+  const books = ePub('../src/assets/angel01.epub').renderTo('epub-viewer', {
+    width: '100%',
+    height: '100%',
+    allowScriptedContent: true,
+    allowPopups: true
+  } as never)
+
+  const clickBooks = () => {
+    console.log('asas')
+    books.display()
+  }
+
+  const clickNext = () => {
+    console.log('asasa')
+    books.next()
+  }
 
   return (
     <div className="w-screen h-screen flex flex-col bg-cyan-700/50">
@@ -50,7 +69,7 @@ function App(): JSX.Element {
         <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
           关于
         </div>
-        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
+        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm" onClick={clickNext}>
           同步
         </div>
         <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
@@ -58,6 +77,26 @@ function App(): JSX.Element {
         </div>
         <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
           设定
+        </div>
+      </div>
+      <div className="flex flex-row w-full h-full mt-2">
+        <div className="flex flex-[1_1_auto] outline m-2">
+          <NavigationMenu.Root orientation="horizontal">
+            <NavigationMenu.List>
+              <NavigationMenu.Item>目录</NavigationMenu.Item>
+
+              <NavigationMenu.Item>章节一</NavigationMenu.Item>
+
+              <NavigationMenu.Item>章节二</NavigationMenu.Item>
+
+              <NavigationMenu.Indicator />
+            </NavigationMenu.List>
+
+            <NavigationMenu.Viewport />
+          </NavigationMenu.Root>
+        </div>
+        <div className="flex flex-[4_1_auto] outline m-2">
+          <div className="flex w-96 h-96 bg-white m-2" onClick={clickBooks} id="epub-viewer"></div>
         </div>
       </div>
     </div>
