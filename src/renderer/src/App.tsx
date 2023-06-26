@@ -2,37 +2,79 @@
 // import icons from './assets/icons.svg'
 import wifu from '../../../resources/avatar.jpg'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'
 import ePub from 'epubjs'
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+function useEpubRenderer() {
+  const books = useRef(ePub('../src/assets/angel01.epub'))
+  const isMounted = useRef(false)
+
+  useEffect(() => {
+    const { current: epubInstance } = books
+
+    if (!isMounted.current) {
+      console.log('sta')
+      epubInstance.renderTo('epub-viewer', {
+        width: '100%',
+        height: '100%',
+        allowScriptedContent: true
+      } as never)
+      epubInstance.rendition.display()
+      console.log('end')
+
+      isMounted.current = true
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.keyCode === 37) {
+        // 左箭头键
+        epubInstance.rendition.prev()
+      } else if (event.keyCode === 39) {
+        // 右箭头键
+        epubInstance.rendition.next()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
+
+  const clickBooks = useCallback(() => {
+    console.log('click')
+  }, [])
+
+  const clickNext = useCallback(() => {
+    console.log('asasa')
+    books.current.rendition.next()
+  }, [])
+
+  const clickPrev = useCallback(() => {
+    console.log('asasa')
+    books.current.rendition.prev()
+  }, [])
+
+  return { clickBooks, clickNext, clickPrev }
+}
+
+const Compon = React.memo(() => {
+  const { clickBooks } = useEpubRenderer()
+
+  return (
+    <div className="flex flex-[4_1_auto] outline m-2">
+      <div className="w-96 h-96 bg-white m-2 z-50" onClick={clickBooks} id="epub-viewer"></div>
+    </div>
+  )
+})
+
 function App(): JSX.Element {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const [isBookOpen, setIsBookOpen] = useState(false)
-  const books = ePub('../src/assets/angel01.epub')
-
-  useEffect(() => {
-    books.renderTo('epub-viewer', {
-      width: '100%',
-      height: '100%',
-      allowScriptedContent: true
-    } as never)
-  }, [])
-
-  const clickBooks = () => {
-    books.rendition.display()
-  }
-
-  const clickNext = () => {
-    console.log('asasa')
-    books.rendition.next();
-  }
-
-  const clickPrev = () => {
-    console.log('asasa')
-    books.rendition.prev();
-  }
 
   return (
     <div className="w-screen h-screen flex flex-col bg-cyan-700/50">
@@ -76,10 +118,14 @@ function App(): JSX.Element {
         <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
           关于
         </div>
-        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm" onClick={clickNext}>
+        <div
+          className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm"
+        >
           同步
         </div>
-        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm" onClick={clickPrev}>
+        <div
+          className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm"
+        >
           添加
         </div>
         <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
@@ -102,13 +148,7 @@ function App(): JSX.Element {
             <NavigationMenu.Viewport />
           </NavigationMenu.Root>
         </div>
-        <div className="flex flex-[4_1_auto] outline m-2">
-          <div
-            className="w-96 h-96 bg-white m-2 z-50"
-            onClick={clickBooks}
-            id="epub-viewer"
-          ></div>
-        </div>
+        <Compon></Compon>
       </div>
     </div>
   )
