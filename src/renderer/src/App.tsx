@@ -10,21 +10,28 @@ import ePub from 'epubjs'
 function App(): JSX.Element {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const [isBookOpen, setIsBookOpen] = useState(false)
-  const books = ePub('../src/assets/angel01.epub').renderTo('epub-viewer', {
-    width: '100%',
-    height: '100%',
-    allowScriptedContent: true,
-    allowPopups: true
-  } as never)
+  const books = ePub('../src/assets/angel01.epub')
+
+  useEffect(() => {
+    books.renderTo('epub-viewer', {
+      width: '100%',
+      height: '100%',
+      allowScriptedContent: true
+    } as never)
+  }, [])
 
   const clickBooks = () => {
-    console.log('asas')
-    books.display()
+    books.rendition.display()
   }
 
   const clickNext = () => {
     console.log('asasa')
-    books.next()
+    books.rendition.next();
+  }
+
+  const clickPrev = () => {
+    console.log('asasa')
+    books.rendition.prev();
   }
 
   return (
@@ -72,7 +79,7 @@ function App(): JSX.Element {
         <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm" onClick={clickNext}>
           同步
         </div>
-        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
+        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm" onClick={clickPrev}>
           添加
         </div>
         <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
@@ -96,7 +103,11 @@ function App(): JSX.Element {
           </NavigationMenu.Root>
         </div>
         <div className="flex flex-[4_1_auto] outline m-2">
-          <div className="flex w-96 h-96 bg-white m-2" onClick={clickBooks} id="epub-viewer"></div>
+          <div
+            className="w-96 h-96 bg-white m-2 z-50"
+            onClick={clickBooks}
+            id="epub-viewer"
+          ></div>
         </div>
       </div>
     </div>
