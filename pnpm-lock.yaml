@@ -25,6 +25,7 @@ specifiers:
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-react: ^7.32.2
   framer-motion: ^10.12.16
+  jotai: ^2.2.1
   postcss: ^8.4.23
   prettier: ^2.8.7
   react: ^18.2.0
@@ -43,6 +44,7 @@ dependencies:
   electron-updater: 5.3.0
   epubjs: 0.3.93
   framer-motion: 10.12.16_biqbaboplfbrettd7655fr4n2y
+  jotai: 2.2.1_react@18.2.0
   postcss: 8.4.23
 
 devDependencies:
@@ -3420,6 +3422,18 @@ packages:
     resolution: {integrity: sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==}
     hasBin: true
     dev: true
+
+  /jotai/2.2.1_react@18.2.0:
+    resolution: {integrity: sha512-Gz4tpbRQy9OiFgBwF9F7TieDn0UTE3C0IFSDuxHjOIvgn2tACH30UKz6p/wIlfoZROXSTCIxEvYEa7Y25WM+8g==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}

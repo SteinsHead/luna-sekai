@@ -5,11 +5,14 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'
-import Viewer from "./components/Viewer";
+import Viewer from './components/Viewer'
+import { useAtom } from 'jotai'
+import { tocAtom } from './books/epubToc'
+import ItemToc from './components/ItemToc'
 
 function App(): JSX.Element {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
-  const [isBookOpen, setIsBookOpen] = useState(false)
+  const [toc] = useAtom(tocAtom)
 
   return (
     <div className="w-screen h-screen flex flex-col bg-cyan-700/50">
@@ -67,12 +70,7 @@ function App(): JSX.Element {
         <div className="flex flex-[1_1_auto] outline m-2">
           <NavigationMenu.Root orientation="horizontal">
             <NavigationMenu.List>
-              <NavigationMenu.Item>目录</NavigationMenu.Item>
-
-              <NavigationMenu.Item>章节一</NavigationMenu.Item>
-
-              <NavigationMenu.Item>章节二</NavigationMenu.Item>
-
+              <ItemToc toc={toc}></ItemToc>
               <NavigationMenu.Indicator />
             </NavigationMenu.List>
 
