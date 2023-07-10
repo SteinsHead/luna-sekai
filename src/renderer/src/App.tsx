@@ -2,17 +2,20 @@
 // import icons from './assets/icons.svg'
 import wifu from '../../../resources/avatar.jpg'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'
 import Viewer from './components/Viewer'
+import Books from './components/Books'
 import { useAtom } from 'jotai'
 import { tocAtom } from './books/epubToc'
 import ItemToc from './components/ItemToc'
+import { showAtom } from './books/epubShow'
 
 function App(): JSX.Element {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const [toc] = useAtom(tocAtom)
+  const [show] = useAtom(showAtom)
 
   return (
     <div className="w-screen h-screen flex flex-col bg-cyan-700/50">
@@ -70,14 +73,17 @@ function App(): JSX.Element {
         <div className="flex flex-[1_1_auto] outline m-2">
           <NavigationMenu.Root orientation="horizontal">
             <NavigationMenu.List>
-              <ItemToc toc={toc}></ItemToc>
+              {show ? <ItemToc toc={toc}></ItemToc> : <div>待显示目录</div>}
               <NavigationMenu.Indicator />
             </NavigationMenu.List>
 
             <NavigationMenu.Viewport />
           </NavigationMenu.Root>
         </div>
-        <Viewer></Viewer>
+        <div className="flex flex-[4_1_auto] outline m-2">
+          <AnimatePresence>{show ? <Viewer></Viewer> : <Books></Books>}</AnimatePresence>
+          {/*<Viewer></Viewer>*/}
+        </div>
       </div>
     </div>
   )

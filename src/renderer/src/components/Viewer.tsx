@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useEffect, useRef } from 'react'
 import ePub from 'epubjs'
-import { tocAtom } from "../books/epubToc";
+import { tocAtom } from '../books/epubToc'
 import { useAtom } from 'jotai'
+import { motion } from 'framer-motion'
 
 const useEpubRenderer = () => {
   const books = useRef(ePub('../src/assets/angel01.epub'))
@@ -14,6 +15,8 @@ const useEpubRenderer = () => {
     if (!isMounted.current) {
       console.log('sta')
       epubInstance.ready.then(() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         setTocAtom(epubInstance.navigation.toc)
       })
       epubInstance.renderTo('epub-viewer', {
@@ -47,27 +50,21 @@ const useEpubRenderer = () => {
   return { books }
 }
 
+// eslint-disable-next-line react/display-name
 const Viewer = React.memo(() => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   const { books } = useEpubRenderer()
 
-  // const clickBooks = (event) => {
-  //   const rect = event.currentTarget.getBoundingClientRect()
-  //   const clickX = event.clientX - rect.left
-  //
-  //   // 根据点击位置判断是左侧还是右侧区域
-  //   const isLeftArea = clickX < rect.width / 2
-  //
-  //   if (isLeftArea) {
-  //     books.current.rendition.prev() // 点击左侧区域进行上一页翻页操作
-  //   } else {
-  //     books.current.rendition.next() // 点击右侧区域进行下一页翻页操作
-  //   }
-  // }
-
   return (
-    <div className="flex flex-[4_1_auto] outline m-2">
-      <div className="w-96 h-96 bg-white m-2 z-50" id="epub-viewer"></div>
-    </div>
+    <motion.div
+      className="w-96 h-96 bg-white m-2 z-50 rounded-md shadow-[0_2px_10px_0_rgba(0,0,0,0.3)]"
+      id="epub-viewer"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    ></motion.div>
   )
 })
 
