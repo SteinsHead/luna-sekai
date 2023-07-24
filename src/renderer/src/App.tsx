@@ -11,11 +11,14 @@ import { useAtom } from 'jotai'
 import { tocAtom } from './books/epubToc'
 import ItemToc from './components/ItemToc'
 import { showAtom } from './books/epubShow'
+import NavigatorMenu from './components/NavigatorMenu'
 
 function App(): JSX.Element {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
   const [toc] = useAtom(tocAtom)
   const [show] = useAtom(showAtom)
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 
   return (
     <div className="w-screen h-screen flex flex-col bg-cyan-700/50">
@@ -56,18 +59,7 @@ function App(): JSX.Element {
             )}
           </AnimatePresence>
         </DropdownMenu.Root>
-        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
-          关于
-        </div>
-        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
-          同步
-        </div>
-        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
-          添加
-        </div>
-        <div className="flex justify-center items-center h-8 w-14 outline outline-offset-2 outline-blue-500/50 rounded-sm">
-          设定
-        </div>
+        <NavigatorMenu></NavigatorMenu>
       </div>
       <div className="flex flex-row w-full h-full mt-2">
         <div className="flex flex-[1_1_auto] outline m-2">
