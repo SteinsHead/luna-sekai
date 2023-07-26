@@ -1,22 +1,19 @@
-// import Versions from './components/Versions'
-// import icons from './assets/icons.svg'
 import wifu from '../../../resources/avatar.jpg'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import * as NavigationMenu from '@radix-ui/react-navigation-menu'
-import Viewer from './components/Viewer'
-import Books from './components/Books'
 import { useAtom } from 'jotai'
-import { tocAtom } from './books/epubToc'
-import ItemToc from './components/ItemToc'
-import { showAtom } from './books/epubShow'
+import { pageAtom } from './books/pages'
 import NavigatorMenu from './components/NavigatorMenu'
+import MainPages from './components/MainPages'
+import SyncBooks from './components/SyncBooks'
+import AddBooks from './components/AddBooks'
+import ConfigBooks from './components/ConfigBooks'
 
 function App(): JSX.Element {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false)
-  const [toc] = useAtom(tocAtom)
-  const [show] = useAtom(showAtom)
+
+  const [isPage] = useAtom(pageAtom)
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 
@@ -61,22 +58,17 @@ function App(): JSX.Element {
         </DropdownMenu.Root>
         <NavigatorMenu></NavigatorMenu>
       </div>
-      <div className="flex flex-row w-full h-full mt-2">
-        <div className="flex flex-[1_1_auto] outline m-2">
-          <NavigationMenu.Root orientation="horizontal">
-            <NavigationMenu.List>
-              {show ? <ItemToc toc={toc}></ItemToc> : <div>待显示目录</div>}
-              <NavigationMenu.Indicator />
-            </NavigationMenu.List>
-
-            <NavigationMenu.Viewport />
-          </NavigationMenu.Root>
-        </div>
-        <div className="flex flex-[4_1_auto] outline m-2">
-          <AnimatePresence>{show ? <Viewer></Viewer> : <Books></Books>}</AnimatePresence>
-          {/*<Viewer></Viewer>*/}
-        </div>
-      </div>
+      <AnimatePresence>
+        {isPage === '主页' ? (
+          <MainPages></MainPages>
+        ) : isPage === '添加' ? (
+          <AddBooks></AddBooks>
+        ) : isPage === '同步' ? (
+          <SyncBooks></SyncBooks>
+        ) : isPage === '关于' ? (
+          <ConfigBooks></ConfigBooks>
+        ) : null}
+      </AnimatePresence>
     </div>
   )
 }

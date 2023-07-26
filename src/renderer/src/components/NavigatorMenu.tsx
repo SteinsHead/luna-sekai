@@ -1,11 +1,29 @@
-import React, { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
 import * as NavigationMenu from '@radix-ui/react-navigation-menu'
+import { pageAtom } from '../books/pages'
+import { useEffect } from 'react'
+import { useAtom } from 'jotai'
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const NavigatorMenu = () => {
   const [activeItem, setActiveItem] = useState(0)
   const items = ['主页', '添加', '同步', '关于']
+  const [, setPageAtom] = useAtom(pageAtom)
+  const variants = {
+    hidden: { width: 0, right: 0 },
+    visible: { width: 'auto', right: 5 }
+  }
+  const transitions = {
+    type: 'spring',
+    damping: 20,
+    stiffness: 100
+  }
+
+  useEffect(() => {
+    setPageAtom(items[activeItem])
+  }, [activeItem])
+
   return (
     <>
       <NavigationMenu.Root className="relative justify-center flex w-full z-50">
@@ -13,23 +31,21 @@ const NavigatorMenu = () => {
           {items.map((item, index) => (
             <NavigationMenu.Item key={item}>
               <NavigationMenu.Trigger
-                className={`px-3 py-2 outline-0 font-black leading-3 text-violet-500 ${
-                  index === activeItem ? 'border-b-2 border-b-violet-400' : ''
-                }`}
+                className={`px-3 outline-0 font-black leading-3 text-violet-500 `}
                 onClick={() => setActiveItem(index)}
               >
-                {item}
-              </NavigationMenu.Trigger>
-              <AnimatePresence>
-                {activeItem === index && (
+                <div className={`pb-2 ${index === activeItem ? '' : ''}`}>{item}</div>
+                {index === activeItem && (
                   <motion.div
-                    initial={{ y: 10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -10, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  ></motion.div>
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    variants={variants}
+                    transition={transitions}
+                    className="border-b-2 border-violet-400"
+                  />
                 )}
-              </AnimatePresence>
+              </NavigationMenu.Trigger>
             </NavigationMenu.Item>
           ))}
         </NavigationMenu.List>
