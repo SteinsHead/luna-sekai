@@ -10,13 +10,9 @@ const NavigatorMenu = () => {
   const [activeItem, setActiveItem] = useState(0)
   const items = ['主页', '添加', '同步', '关于']
   const [, setPageAtom] = useAtom(pageAtom)
-  const variants = {
-    hidden: { width: 0, right: 0 },
-    visible: { width: 'auto', right: 5 }
-  }
   const transitions = {
     type: 'spring',
-    damping: 20,
+    damping: 15,
     stiffness: 100
   }
 
@@ -34,15 +30,12 @@ const NavigatorMenu = () => {
                 className={`px-3 outline-0 font-black leading-3 text-violet-500 `}
                 onClick={() => setActiveItem(index)}
               >
-                <div className={`pb-2 ${index === activeItem ? '' : ''}`}>{item}</div>
+                <div className={`pb-2 ${index === activeItem ? 'text-violet-400' : 'text-gray-500'}`}>{item}</div>
                 {index === activeItem && (
                   <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    exit="hidden"
-                    variants={variants}
                     transition={transitions}
                     className="border-b-2 border-violet-400"
+                    layoutId="active-id"
                   />
                 )}
               </NavigationMenu.Trigger>
