@@ -5,7 +5,7 @@ import Viewer from './Viewer'
 import Books from './Books'
 import { showAtom } from '../books/epubShow'
 import { tocAtom } from '../books/epubToc'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import { RowSpacingIcon, Cross2Icon } from '@radix-ui/react-icons'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -14,7 +14,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 const MainPages = () => {
   const [toc] = useAtom(tocAtom)
   const [show] = useAtom(showAtom)
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(true)
 
   return (
     <>
@@ -29,7 +29,7 @@ const MainPages = () => {
             } outline m-2 rounded justify-center whitespace-normal p-2 relative`}
           >
             <Collapsible.Trigger asChild>
-              <button className="h-6 w-6 rounded-full bg-white absolute top-1 right-1 flex justify-center items-center">
+              <button className="h-6 w-6 rounded-full bg-white absolute top-2 right-1 flex justify-center items-center">
                 {open ? <Cross2Icon /> : <RowSpacingIcon />}
               </button>
             </Collapsible.Trigger>
