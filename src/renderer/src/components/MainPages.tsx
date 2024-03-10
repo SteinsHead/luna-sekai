@@ -18,10 +18,9 @@ const MainPages = () => {
 
   return (
     <>
-      <AnimatePresence mode='wait'>
+      <AnimatePresence mode="wait">
         <motion.div className="flex flex-row w-full h-full mt-2">
           <Collapsible.Root
-
             open={open}
             onOpenChange={() => setOpen(!open)}
             className={`flex ${
