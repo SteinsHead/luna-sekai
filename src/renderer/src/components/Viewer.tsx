@@ -81,7 +81,7 @@ const Viewer = React.memo(() => {
           onClick={handleBackClick}
         >
           <svg
-            className="w-3 h-3 fill-current"
+            className="w-4 h-4 fill-current"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
           >
