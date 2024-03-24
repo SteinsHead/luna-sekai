@@ -12,6 +12,7 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
+    assetsInclude: ['**/*.epub'],
     resolve: {
       alias: {
         '@renderer': resolve('src/renderer/src')

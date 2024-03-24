@@ -4,9 +4,12 @@ import { coverAtom } from '../books/epubCover'
 import { showAtom } from '../books/epubShow'
 import { useAtom } from 'jotai'
 import { motion } from 'framer-motion'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import angel from '../../public/angel01.epub'
 
 const useEpubGetter = () => {
-  const books = useRef(ePub('../src/assets/angel01.epub'))
+  const books = useRef(ePub(angel))
   const isMounted = useRef(false)
   const [, setCoverAtom] = useAtom(coverAtom)
 

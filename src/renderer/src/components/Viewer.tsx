@@ -4,17 +4,21 @@ import { tocAtom } from '../books/epubToc'
 import { useAtom } from 'jotai'
 import { motion } from 'framer-motion'
 import { showAtom } from '../books/epubShow'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import angel from '../../public/angel01.epub'
 
 const useEpubRenderer = () => {
-  const books = useRef(ePub('../src/assets/angel01.epub'))
+  const books = useRef(ePub(angel))
   const isMounted = useRef(false)
   const [, setTocAtom] = useAtom(tocAtom)
-  
 
   useEffect(() => {
     const { current: epubInstance } = books
     if (!isMounted.current) {
       epubInstance.ready.then(() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         setTocAtom(epubInstance.navigation.toc)
       })
       epubInstance.renderTo('epub-viewer', {
@@ -73,11 +77,11 @@ const Viewer = React.memo(() => {
   return (
     <motion.div className="p-8 flex justify-center items-center relative">
       <button
-          className="absolute top-4 left-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full"
+          className="absolute top-2 left-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded-full"
           onClick={handleBackClick}
         >
           <svg
-            className="w-6 h-6 fill-current"
+            className="w-3 h-3 fill-current"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -89,11 +93,11 @@ const Viewer = React.memo(() => {
           </svg>
         </button>
       <button
-        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full mr-4"
+        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded-full mr-4"
         onClick={handlePrevClick}
       >
         <svg
-          className="w-6 h-6 fill-current"
+          className="w-5 h-5 fill-current"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -115,11 +119,11 @@ const Viewer = React.memo(() => {
       ></motion.div>
 
       <button
-        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full ml-4"
+        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-2 rounded-full ml-4"
         onClick={handleNextClick}
       >
         <svg
-          className="w-6 h-6 fill-current"
+          className="w-5 h-5 fill-current"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
         >

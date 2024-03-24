@@ -16,6 +16,11 @@ const MainPages = () => {
   const [show] = useAtom(showAtom)
   const [open, setOpen] = useState(true)
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  const handleTocClick = () => {
+    setOpen(!open)
+  }
+
   return (
     <>
       <AnimatePresence mode="wait">
@@ -24,11 +29,14 @@ const MainPages = () => {
             open={open}
             onOpenChange={() => setOpen(!open)}
             className={`flex ${
-              open ? 'w-1/4' : 'w-8'
+              open ? 'w-1/4' : 'w-11'
             } outline m-2 rounded justify-center whitespace-normal p-2 relative`}
           >
             <Collapsible.Trigger asChild>
-              <button className="h-6 w-6 rounded-full bg-white absolute top-2 right-1 flex justify-center items-center">
+              <button
+                className="h-7 w-7 rounded-full bg-gray-300 hover:bg-gray-400 absolute top-2 right-2 flex justify-center items-center"
+                onClick={handleTocClick}
+              >
                 {open ? <Cross2Icon /> : <RowSpacingIcon />}
               </button>
             </Collapsible.Trigger>
